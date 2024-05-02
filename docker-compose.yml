@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: root
+      context: ./
+      dockerfile: Dockerfile
+    image: micasasegura-php
+    container_name: micasasegura-php
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - micasasegura-network
+  nginx:
+    image: nginx:alpine
+    container_name: micasasegura-nginx
+    restart: unless-stopped
+    ports:
+      - 8002:8000
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - micasasegura-network
+
+  db:
+    image: postgres
+    container_name: micasasegura-db
+    restart: unless-stopped
+    volumes:
+      - "./postgres/backup:/backup/"
+      - "./postgres/data:/var/lib/postgresql/data:delegated"
+    env_file:
+      - postgres/database.env # configure postgres
+    ports:
+      - "5402:5432"
+    networks:
+      - micasasegura-network
+networks:
+  micasasegura-network:
+    driver: bridge
+
