@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('nombre_dirigido')->nullable();
             $table->text('cargo_dirigido')->nullable();
             $table->text('unidad_dirigido')->nullable();
-            $table->text('referencia');
-            $table->text('tipo_informe');
+            $table->text('referencia')->nullable();
+            $table->text('tipo_informe')->nullable();
             $table->text('fecha')->nullable();
             $table->text('dato_informe');
             $table->text('observacion')->nullable();

@@ -72,162 +72,49 @@ class InformeController extends Controller
     public function store(Request $request)
     {    
         $year = date("Y", strtotime(now()));
-        if($request->tipo_informe=="Convenio")
-        {
-            $categoryId=Informe::orderByDesc('id')->first();
-            $autoIncId=$categoryId->numero+1;
-            $validator = Validator::make($request->all(),[
-                'referencia'=>'required|max:500',
-                'tipo_informe' => 'required',
-                'dato_informe'=>'required',
-                'prioridad'=>'required',
-                'fecha'=>'required',
-            ]);
-            if($validator->fails()){
-                return response()->json(['state'=>false,'errors'=>$validator->errors()]);
-            }
-            $category= new Informe;
-            $category->id_usuario_generador = $request->input('id_usuario_generador');
-            $array_vacio = array();
-            $arrays_usuarios = $request->input('usuario');
-            $arrays_cargos= $request->input('cargo');
-            $arrays_unidad=$request->input('unidad');
-            $arrays_firmas=$request->input('firma');
-            for ($i=0;$i<count($arrays_usuarios); $i++)
-            {
-                $json_tranformas=[  
-                
-                    'nombre'=>$arrays_usuarios[$i],
-                    'cargo'=>$arrays_cargos[$i],
-                    'unidad'=>$arrays_unidad[$i],
-                    'firma'=>$arrays_firmas[$i],
-                    
-                ];
-                array_push($array_vacio,$json_tranformas);
-            }
-            $json_transformado = json_encode($array_vacio);
-
-            $array_nombre_convenio = $request->input('nombreconvenio');
-            $array_cargo_convenio = $request->input('cargoconvenio');
-            $array_empresa_convenio = $request->input('empresaconvenio');
-            $array_convenio = array();
-            if (!empty($array_nombre_convenio)) {
-                for($i=0;$i<count($array_nombre_convenio);$i++)
-                {
-                    $json_datos_convenio =[
-                        'nombre_convenio'=>$array_nombre_convenio[$i],
-                        'cargo_convenio'=>$array_cargo_convenio[$i],
-                        'empresa_convenio'=>$array_empresa_convenio[$i],
-                    ];
-                    array_push($array_convenio,$json_datos_convenio);
-                }
-            }
-            $json_transformado_convenio = json_encode($array_convenio);
-            $category->nombre_dirigido = $request->input('nombre_dirigido');
-            $category->cargo_dirigido = $request->input('cargo_dirigido');
-            $category->unidad_dirigido = $request->input('unidad_dirigido');
-            $category->tipo_informe = $request->input('tipo_informe');
-            $category->referencia = $request->input('referencia');
-            $category->fecha = $request->input('fecha');
-            $category->dato_informe = $request->input('dato_informe');
-            $category->pie_pagina = $request->input('pie_pagina');
-            $category->estado = $request->input('estado');
-            $category->numero=$autoIncId;
-            $category->usuario=$json_transformado;
-            $category->datos_convenio = $json_transformado_convenio;
-            //$category->archivo_del_informe= $request->input('archivo_del_informe');
-            if($imagen = $request->file('logo')) {
-                $rutaGuardarImg = 'archivos/';
-                $imagenProducto = date('YmdHis'). "." . $imagen->getClientOriginalExtension();
-                $imagen->move($rutaGuardarImg, $imagenProducto);
-                $category['logo'] = "$imagenProducto";  
-            }
-            $category->fecha_creacion= now();
-            $category->prioridad=$request->input('prioridad');
-            $category->gestion = $year;
-            $category->save();
-            return response()->json(['success'=>true]);
-            //Alert::success('Informe Creado Correctamente'); 
-            //return redirect('/billing');
-        }else{
-            $categoryId=Informe::orderByDesc('id')->first();
-            $autoIncId=$categoryId->numero+1;
-            $validator = Validator::make($request->all(),[
-                'id_usuario_generador'=>'required',
-                'usuario'=>'required',
-                'referencia'=>'required|max:500',
-                'tipo_informe' => 'required',
-                'fecha'=>'required',
-                'dato_informe'=>'required',
-                'prioridad'=>'required',
-            ]);
-            if($validator->fails()){
-                return response()->json(['state' => false,'errors' => $validator->errors()]);
-            }
-            //me
-            $category= new Informe;
-            $category->id_usuario_generador = $request->input('id_usuario_generador');
-            $array_vacio = array();
-            $arrays_usuarios = $request->input('usuario');
-            $arrays_cargos= $request->input('cargo');
-            $arrays_unidad=$request->input('unidad');
-            $arrays_firmas=$request->input('firma');
-            for ($i=0;$i<count($arrays_usuarios); $i++)
-            {
-                $json_tranformas=[  
-                
-                    'nombre'=>$arrays_usuarios[$i],
-                    'cargo'=>$arrays_cargos[$i],
-                    'unidad'=>$arrays_unidad[$i],
-                    'firma'=>$arrays_firmas[$i],
-                    
-                ];
-                array_push($array_vacio,$json_tranformas);
-            }
-            $json_transformado = json_encode($array_vacio);
-            $arrays_prefijo = $request->input('prefijo_guardar');
-            $arrays_nombre_dirigido= $request->input('dirigido_guardar');
-            $arrays_cargo_dirigido = $request->input('cargo_guardar');
-            $arrays_unidad_dirigida = $request->input('unidad_guardar');
-
-            $json_prefijo = json_encode($arrays_prefijo);
-            $json_nombre_dirigido=json_encode($arrays_nombre_dirigido);
-            $json_cargo_dirigido=json_encode($arrays_cargo_dirigido);
-            $json_unidad_dirigido=json_encode($arrays_unidad_dirigida);
-
-            $category->prefijo= $json_prefijo;
-            $category->nombre_dirigido = $json_nombre_dirigido;
-            $category->cargo_dirigido = $json_cargo_dirigido;
-            $category->unidad_dirigido = $json_unidad_dirigido;
-
-            //$category->nombre_dirigido = $request->input('nombre_dirigido');
-            //$category->cargo_dirigido = $request->input('cargo_dirigido');
-            //$category->unidad_dirigido = $request->input('unidad_dirigido');
-            //$category->prefijo= $request->input('prefijo');
-
-            $category->tipo_informe = $request->input('tipo_informe');
-            $category->referencia = $request->input('referencia');
-            $category->fecha = $request->input('fecha');
-            $category->dato_informe = $request->input('dato_informe');
-            $category->pie_pagina = $request->input('pie_pagina');
-            $category->estado = $request->input('estado');
-            $category->numero=$autoIncId;
-            $category->usuario=$json_transformado;
-            //$category->archivo_del_informe= $request->input('archivo_del_informe');
-            if($imagen = $request->file('archivo_del_informe')) {
-                $rutaGuardarImg = 'archivos/';
-                $imagenProducto = date('YmdHis'). "." . $imagen->getClientOriginalExtension();
-                $imagen->move($rutaGuardarImg, $imagenProducto);
-                $category['archivo_del_informe'] = "$imagenProducto";  
-            }
-            $category->fecha_creacion= now();
-            $category->prioridad=$request->input('prioridad');
-            $category->gestion = $year;
-            $category->save();
-            return response()->json(['success'=>true]);
-            //Alert::success('Informe Creado Correctamente'); 
-            //return redirect('/billing');
+        $categoryId=Informe::orderByDesc('id')->first();
+        $autoIncId=$categoryId->numero+1;
+        $validator = Validator::make($request->all(),[
+            'usuario'=>'required',    
+            'dato_informe'=>'required',
+        ]);
+        if($validator->fails()){
+            return response()->json(['state' => false,'errors' => $validator->errors()]);
         }
+        //me
+        $category= new Informe;
+        $category->id_usuario_generador = $request->input('id_usuario_generador');
+        $array_vacio = array();
+        $arrays_usuarios = $request->input('usuario');
+        $arrays_cargos= $request->input('cargo');
+        $arrays_unidad=$request->input('unidad');
+        $arrays_firmas=$request->input('firma');
+        for ($i=0;$i<count($arrays_usuarios); $i++)
+        {
+            $json_tranformas=[  
+            
+                'nombre'=>$arrays_usuarios[$i],
+                'cargo'=>$arrays_cargos[$i],
+                'unidad'=>$arrays_unidad[$i],
+                'firma'=>$arrays_firmas[$i],
+                
+            ];
+            array_push($array_vacio,$json_tranformas);
+        }
+        $json_transformado = json_encode($array_vacio);
+
+        
+
+        $category->dato_informe = $request->input('dato_informe');
+        
+        $category->numero=$autoIncId;
+        $category->usuario=$json_transformado;
+        
+        $category->fecha_creacion= now();
+        $category->gestion = $year;
+        $category->save();
+        return response()->json(['success'=>true]);
+        
     }
 
     /**
@@ -262,130 +149,12 @@ class InformeController extends Controller
      */
     public function update(Request $request)
     {
-        
-        if($request->tipo_informe=="Convenio"){
-            $id = $request->id;
-            //$informe = Informe::find($id);
-            $category= Informe::find($id);
-            $array_vacio = array();
-            $arrays_usuarios = $request->input('usuario');
-            $arrays_cargos= $request->input('cargo');
-            $arrays_unidad=$request->input('unidad');
-            $arrays_firmas=$request->input('firma');
-            for ($i=0;$i<count($arrays_usuarios); $i++)
-            {
-                $json_tranformas=[  
-                
-                    'nombre'=>$arrays_usuarios[$i],
-                    'cargo'=>$arrays_cargos[$i],
-                    'unidad'=>$arrays_unidad[$i],
-                    'firma'=>$arrays_firmas[$i],
-                    
-                ];
-                array_push($array_vacio,$json_tranformas);
-            }
-            $json_transformado = json_encode($array_vacio);
-            
-            $array_nombre_convenio = $request->input('nombreconvenio');
-            $array_cargo_convenio = $request->input('cargoconvenio');
-            $array_empresa_convenio = $request->input('empresaconvenio');
-            $array_convenio = array();
-            if (!empty($array_nombre_convenio)) {
-                for($i=0;$i<count($array_nombre_convenio);$i++)
-                {
-                    $json_datos_convenio =[
-                        'nombre_convenio'=>$array_nombre_convenio[$i],
-                        'cargo_convenio'=>$array_cargo_convenio[$i],
-                        'empresa_convenio'=>$array_empresa_convenio[$i],
-                    ];
-                    array_push($array_convenio,$json_datos_convenio);
-                }
-            }    
-            $json_transformado_convenio = json_encode($array_convenio);
-            $category->nombre_dirigido = $request->input('nombre_dirigido');
-            $category->cargo_dirigido = $request->input('cargo_dirigido');
-            $category->unidad_dirigido = $request->input('unidad_dirigido');
-            $category->tipo_informe = $request->input('tipo_informe');
-            $category->referencia = $request->input('referencia');
-            $category->fecha = $request->input('fecha');
-            $category->dato_informe = $request->input('dato_informe');
-            $category->pie_pagina = $request->input('pie_pagina');
-            $category->estado = $request->input('estado');
-            $category->usuario=$json_transformado;
-            $category->datos_convenio = $json_transformado_convenio;
-            $category->prioridad=$request->input('prioridad');
-           
-            if($imagen = $request->file('logo')){
-                $rutaGuardarImg = 'archivos/';
-                $imagenProducto = date('YmdHis'). "." . $imagen->getClientOriginalExtension();
-                $imagen->move($rutaGuardarImg, $imagenProducto);
-                $category['logo'] = "$imagenProducto";
-            }else{
-                //$category->logo="";
-                unset($category['logo']);
-            }
-            
-            $category->update();
-            return response()->json(['success'=>true]);
-            //Alert::success('Informe Actualizado Correctamente'); 
-            //return redirect('/dashboard'); 
-        }else{
-            $id = $request->id;
-            //$informe = Informe::find($id);
-            /*$request->validate([
-                'usuario'=>'required',
-                'nombre_dirigido' => 'required',
-                'cargo_dirigido' => 'required',
-                'unidad_dirigido' => 'required',
-                'referencia'=>'required',
-                'tipo_informe' => 'required',
-                'fecha'=>'required',
-                'dato_informe'=>'required',
-                'estado'=>'',
-            ]);*/
-            $category= Informe::find($id);
-            $arrays_prefijo = $request->input('prefijo_guardar');
-            $arrays_nombre_dirigido= $request->input('dirigido_guardar');
-            $arrays_cargo_dirigido = $request->input('cargo_guardar');
-            $arrays_unidad_dirigida = $request->input('unidad_guardar');
-            $json_prefijo = json_encode($arrays_prefijo);
-            $json_nombre_dirigido=json_encode($arrays_nombre_dirigido);
-            $json_cargo_dirigido=json_encode($arrays_cargo_dirigido);
-            $json_unidad_dirigido=json_encode($arrays_unidad_dirigida);
-            $category->prefijo= $json_prefijo;
-            $category->nombre_dirigido = $json_nombre_dirigido;
-            $category->cargo_dirigido = $json_cargo_dirigido;
-            $category->unidad_dirigido = $json_unidad_dirigido;
-            //$array_vacio = array();
-            $arrays_usuarios = $request->input('usuario');
-            $arrays_cargos= $request->input('cargo');
-            $arrays_unidad=$request->input('unidad');
-            $arrays_firmas=$request->input('firma');
-            /*for ($i=0;$i<count($arrays_usuarios); $i++)
-            {
-                $json_tranformas=[  
-                
-                    'nombre'=>$arrays_usuarios[$i],
-                    'cargo'=>$arrays_cargos[$i],
-                    'unidad'=>$arrays_unidad[$i],
-                    'firma'=>$arrays_firmas[$i],
-                    
-                ];
-                array_push($array_vacio,$json_tranformas);
-            }*/
-            //$json_transformado = json_encode($array_vacio);
-            $category->tipo_informe = $request->input('tipo_informe');
-            $category->referencia = $request->input('referencia');
-            $category->fecha = $request->input('fecha');
-            $category->dato_informe = $request->input('dato_informe');
-            $category->pie_pagina = $request->input('pie_pagina');
-            $category->estado = $request->input('estado');
-            //$category->usuario=$json_transformado;
-            $category->prioridad=$request->input('prioridad');
-            $category->update();
-            return response()->json(['success'=>true]); 
-        }
-        
+        $id = $request->id;
+        $category= Informe::find($id);
+        $category->dato_informe = $request->input('dato_informe');
+        //$category->usuario=$json_transformado;
+        $category->update();
+        return response()->json(['success'=>true]); 
     }
 
 
@@ -410,7 +179,7 @@ class InformeController extends Controller
         $solicitud = Informe::find($solicitudId);
         //dd($solicitud);
         $informe=DB::table('informe')->where('informe.id','=',$solicitudId)
-            ->select('informe.id','informe.numero','informe.id_usuario_generador','informe.usuario','informe.nombre_dirigido','informe.cargo_dirigido','informe.unidad_dirigido','informe.referencia','informe.tipo_informe','informe.fecha','informe.dato_informe','informe.id_oficina','informe.oficina','informe.fecha_finalizacion','informe.prefijo','informe.logo','informe.datos_convenio','informe.pie_pagina')
+            ->select('informe.id','informe.numero','informe.id_usuario_generador','informe.usuario','informe.dato_informe','informe.id_oficina','informe.oficina','informe.fecha_finalizacion','informe.prefijo')
             -> first(); 
         $fecha=DB::table('informe')->where('informe.id','=',$solicitudId)
             ->select('informe.fecha')

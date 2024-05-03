@@ -32,60 +32,31 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nro.</th>
-                                                    <th>Fecha</th>
-                                                    <th>Asunto</th>
-                                                    <th>Dirigido a</th>
-                                                    <th>Estado</th>
+                                                    <th>Fecha</th>                                                    
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($dato as $datos)
-                                            @if($datos->estado=="Pendiente" )                                                                           
+                                            @foreach($dato as $datos)                                                                           
                                                 <tr>
                                                     <td>{{$datos->numero}}</td>
-                                                    <td>{{$datos->fecha}}</td>
-                                                    <td>{{$datos->referencia}}</td>
-                                                    @if($datos->nombre_dirigido)
-                                                    @php($arraydenombresdirigidos = json_decode($datos->nombre_dirigido, true))
-                                                    @php($nombres=implode(' , ', $arraydenombresdirigidos))
-                                                    <td>{{$nombres}}</td>
-                                                    @else
-                                                    <td></td>
-                                                    @endif
-                                                    <td>{{$datos->estado}}</td>
+                                                    <td>{{$datos->fecha_creacion}}</td>
                                                     <td>
                                                         <form action="{{route('editar_informe')}}" method="post" >
                                                             @csrf
                                                             <input type="hidden" name="id" value="{{$datos->id}}">
-                                                            <button class="btn btn-info" title="Ver / Editar informe"><i class="fa fa-file-text-o"></i></button>
+                                                            <button class="btn btn-warning" title="Ver / Editar informe"><i class="fa fa-file-text-o"></i></button>
                                                         </form>
-                                                        <form action="{{route('enviar_para_revision')}} " method="post" >
-                                                            @csrf
-                                                            <input type="hidden" name="id" value="{{$datos->id}}">
-                                                            <button class="btn btn-success" title="Enviar a revision"><i class="fa fa-share-square-o" aria-hidden="true"></i></button>
-                                                        </form>
+                                                        
                                                         <form action="{{route('descargarpdf')}}" method="post" target="_blank">
                                                             @csrf 
                                                             <input type="hidden" name="id" value="{{$datos->id}}">
                                                             <button class="btn btn-primary" title="Imprimir Informe"><i class="fa fa-print" aria-hidden="true"></i></button>
                                                         </form>
-                                                        @if($datos->tipo_informe == "Convenio")
-                                                        {{--<form action="{{route('descargarpdfsellos')}}" method="post" target="_blank">
-                                                            @csrf 
-                                                            <input type="hidden" name="id" value="{{$datos->id}}">
-                                                            <button class="btn btn-warning" title="Imprimir Informe"><i class="fa fa-print" aria-hidden="true"></i></button>
-                                                        </form>--}}
-                                                        @endif
-                                                        <form action="{{route('adjuntararchivo')}}" method="post" >
-                                                            @csrf 
-                                                            <input type="hidden" name="id" value="{{$datos->id}}">
-                                                            <button class="btn btn-dark" title="Adjuntar Archivo"><i class="fa fa-folder-open-o" aria-hidden="true"></i></button>
-                                                        </form>
+                                                        
                                                     </td>
-                                                </tr>
-                                            @endif    
-                                                @endforeach
+                                                </tr> 
+                                            @endforeach
                                             </tbody>
                                     </table>
                                     <!-- end date table-->                                
