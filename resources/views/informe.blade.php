@@ -122,8 +122,6 @@
                                         }
                                     }
                                 </script>
-                                
-                                
                                 <!--Verificacion del div de nuevos funcionarios-->
                                 <script>
                                     document.getElementById('btn_guardar_informe').addEventListener('click',function(event){

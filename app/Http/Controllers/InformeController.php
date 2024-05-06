@@ -126,13 +126,14 @@ class InformeController extends Controller
         $solicitud = Informe::find($solicitudId);
         $tipoinforme = TipoInforme::all();
 
-        $theUrl     = config('app.guzzle_test_url');
-        $users   = Http ::get($theUrl);
-        $nombres_funcionarios = $users->object();
+        //$theUrl     = config('app.guzzle_test_url');
+        //$users   = Http ::get($theUrl);
+        //$nombres_funcionarios = $users->object();
         
         //Alert::success('Oficina Creada Correctamente'); 
         //dd($solicitud);
-        return view('editarinforme')->with(['solicitud'=>$solicitud, 'tipoinforme'=>$tipoinforme, 'nombres_funcionarios'=>$nombres_funcionarios]);
+        //, 'nombres_funcionarios'=>$nombres_funcionarios
+        return view('editarinforme')->with(['solicitud'=>$solicitud, 'tipoinforme'=>$tipoinforme]);
         //return view('editarinforme', compact('solicitud'));
     }
 
