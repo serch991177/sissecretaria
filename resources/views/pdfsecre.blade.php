@@ -14,6 +14,7 @@
       header {position: fixed;top: -108px;left: 0px;right: 0px;height: 108px;padding: .5em;text-align: center;}
       footer {/*overflow: hidden;*/position: fixed;bottom: -0.3cm;left: 0cm;right: 0cm;height: 1cm;            }
       body{line-height: 1.15;font-family: 'Verdana';}
+      
     </style>
   </head>
   <body>
@@ -21,15 +22,15 @@
       @php($image_path1 = public_path() . '/img/globo.png')
       @php($imageData = base64_encode(file_get_contents($image_path1)))
       @php($srcglobo = 'data:' . mime_content_type($image_path1) . ';base64,' . $imageData)
-      <div style="text-align:center ; position:relative; top:-20px; left:-295px; font-size:30px; width:550px; height:80px;"><img   src="{{$srcglobo}}" height="100px" class="img-fluid"></div>
+      <div style="text-align:center ; position:relative; top:-50px; left:-222px; font-size:30px; width:550px; height:80px;"><img   src="{{$srcglobo}}" height="180px"  width="390px" class="img-fluid"></div>
       @php($image_path2 = public_path() . '/img/alcaldia.png')
       @php($imageData2 = base64_encode(file_get_contents($image_path2)))
       @php($srclogoalcaldia = 'data:' . mime_content_type($image_path2) . ';base64,' . $imageData2)
-      <div style="text-align:center ; position:relative; top:-70px; left:-15px; font-size:30px; width:550px; height:80px;"><img   src="{{$srclogoalcaldia}}" height="50px" class="img-fluid"></div>
+      <div style="text-align:center ; position:relative; top:-65px; left:80px; font-size:30px; width:550px; height:80px;"><img   src="{{$srclogoalcaldia}}" height="120px" class="img-fluid"></div>
       @php($image_path3 = public_path() . '/img/study.png')
       @php($imageData3 = base64_encode(file_get_contents($image_path3)))
       @php($srcstudy = 'data:' . mime_content_type($image_path3) . ';base64,' . $imageData3)
-      <div style="text-align:center ; position:relative; top:-140px; left:300px; font-size:30px; width:550px; height:80px;"><img   src="{{$srcstudy}}" height="50px" class="img-fluid"></div>
+      <div style="text-align:center ; position:relative; top:-95px; left:290px; font-size:30px; width:550px; height:80px;"><img   src="{{$srcstudy}}" height="30px" class="img-fluid"></div>
     </header>
 
     <footer style="bottom: -0.8cm;left: 0cm;right: 0cm;height: 1cm;color: black ;text-align: left;line-height: 10px;">
