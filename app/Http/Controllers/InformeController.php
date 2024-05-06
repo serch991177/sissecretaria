@@ -54,16 +54,16 @@ class InformeController extends Controller
         ->where('users.id', '=', $iduser)
         ->first();
 
-        $theUrl     = config('app.guzzle_test_url');
-        $users   = Http ::get($theUrl);
-        $nombres_funcionarios = $users->object();
+        //$theUrl     = config('app.guzzle_test_url');
+        //$users   = Http ::get($theUrl);
+        //$nombres_funcionarios = $users->object();
 
        //dd(gettype($nombres_funcionarios));
         //dd($probando_variable);
         //dd($nombres_funcionarios);
 
         //dd($nombre_completo);
-        return view('informe')->with(['tipoinforme'=>$tipoinforme, 'nombre_completo'=>$nombre_completo, 'nombres_funcionarios'=>$nombres_funcionarios]);
+        return view('informe')->with(['tipoinforme'=>$tipoinforme, 'nombre_completo'=>$nombre_completo]);
     }
 
     /**
@@ -212,7 +212,7 @@ class InformeController extends Controller
         
     
         //configuracion pdf
-        $vista = view('pdf', [
+        $vista = view('pdfsecre', [
             'informe'        =>  $informe,
             'todo'           =>  $todo,
             'fechaformateada'=>  $fechaformateada,   
