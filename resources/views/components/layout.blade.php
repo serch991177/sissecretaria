@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/img/log_pagina.ico">
     <title>
-        SISTEMA DE RELACIONES INTERNACIONALES E INTERINSTITUCIONALES
+        SISTEMA DE GENERACIÓN CARTAS
     </title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"

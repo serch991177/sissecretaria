@@ -75,7 +75,7 @@
                 <!---->
             </li>
             @endif
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link text-dark {{ $activePage == 'Observaciones' ? ' active bg-gradient-primary' : '' }}  "
                     href="{{ route('informes_observados') }}">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -83,7 +83,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Observaciones</span>
                 </a>
-            </li>
+            </li>-->
             @if(auth()->user()->finalizador =="true")
             <li class="nav-item">
                 <a class="nav-link text-dark {{ $activePage == 'Informes Terminados' ? ' active bg-gradient-primary' : '' }}  "
@@ -114,7 +114,7 @@
                     <span class="nav-link-text ms-1">Notifications</span>
                 </a>
             </li>-->
-            @if(auth()->user()->generador =="true" || auth()->user()->revisor =="true")
+            {{--@if(auth()->user()->generador =="true" || auth()->user()->revisor =="true")
             <li class="nav-item">
                 <a class="nav-link text-dark {{ $activePage == 'Seguimiento' ? ' active bg-gradient-primary' : '' }}  "
                     href="{{ route('seguimiento_tramites') }}">
@@ -124,7 +124,7 @@
                     <span class="nav-link-text ms-1">Seguimiento de mis tramites</span>
                 </a>
             </li>
-            @endif
+            @endif--}}
 
             @if(auth()->user()->supervisor =="true")
             <li class="nav-item">

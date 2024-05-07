@@ -17,7 +17,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-12 col-md-12">          
                             <h3 style="color:white">BIENVENIDO AL:</h3>
-                            <h1 class="text-center" style="color:white">SISTEMA DE RELACIONES INTERNACIONALES E INTERINSTITUCIONALES</h1>                    
+                            <h1 class="text-center" style="color:white"> SISTEMA DE GENERACIÓN CARTAS</h1>                    
                         </div>     
                                   
                     </div>
